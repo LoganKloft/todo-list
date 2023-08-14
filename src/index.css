@@ -1,0 +1,28 @@
+html,
+body,
+h3, h4, p {
+    margin: 0;
+    padding: 0;
+}
+
+.card {
+    border: 5px solid lightblue;
+    border-radius: 10px;
+    width: 300px;
+}
+
+.card .card-header {
+    background-color: lightblue;
+}
+
+.card .card-header h3 {
+    color: black;
+}
+
+.card .card-header h4 {
+    color: gray;
+}
+
+.card-body p {
+    color: gray;
+}
