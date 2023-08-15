@@ -14,4 +14,16 @@ export class Todo {
         this.project_name = project_name;
         this.id = uuidv4();
     }
+
+    GetStringObject()
+    {
+        return {
+            title: this.title,
+            date: this.date,
+            description: this.description,
+            priority: this.priority,
+            project_name: this.project_name,
+            id: this.id
+        }
+    }
 }

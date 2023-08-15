@@ -37,4 +37,19 @@ export class Project {
             return todo.id === id;
         }, id);
     }
+
+    GetStringObject()
+    {
+        let obj = {};
+        obj.name = this.name;
+
+        let todos = [];
+        for (let todo of this.todos)
+        {
+            todos.push(todo.GetStringObject());
+        }
+        obj.todos = todos;
+
+        return obj;
+    }
 }

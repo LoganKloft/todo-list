@@ -9,7 +9,7 @@ export default (project) => {
     container.appendChild(container_break);
 
     const container_body = document.createElement('div');
-    for (todo of project.todos)
+    for (let todo of project.todos)
     {
         container_body.appendChild(todoDOM(todo));
     }

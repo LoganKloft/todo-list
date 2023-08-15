@@ -5,7 +5,7 @@ export class ProjectManager {
 
     AddTodo(todo)
     {
-        const project_name = todo.project;
+        const project_name = todo.project_name;
 
         if (!this.#HasProject(project_name))
         {
@@ -18,7 +18,7 @@ export class ProjectManager {
 
     RemoveTodo(id)
     {
-        for (project of this.projects)
+        for (let project of this.projects)
         {
             if (project.has(id)) {
                 project.remove(id);
@@ -62,5 +62,19 @@ export class ProjectManager {
         return this.projects.findIndex((project) => {
             return project.name === name;
         }, name) !== -1;
+    }
+
+    GetStringObject()
+    {
+        let obj = {};
+        let projects = [];
+
+        for (let project of this.projects)
+        {
+            projects.push(project.GetStringObject());
+        }
+
+        obj.projects = projects;
+        return obj;
     }
 }
