@@ -22,7 +22,7 @@ if (projectManagerData !== null)
         }
     }
     container.innerHTML = '';
-    container.appendChild(projectManagerDOM(projectManager));
+    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, projectManager));
 }
 
 // handle new todo form
@@ -34,7 +34,7 @@ todo_form.addEventListener('submit', (event) => {
 
     // update display
     container.innerHTML = '';
-    container.appendChild(projectManagerDOM(projectManager));        
+    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, projectManager));        
 
     // save new projectManager by overwriting the previous
     storeProjectManager(projectManager);
@@ -55,7 +55,7 @@ project_form.addEventListener('submit', (event) => {
 
     // update display
     container.innerHTML = '';
-    container.appendChild(projectManagerDOM(projectManager));        
+    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, projectManager));        
 
     // save new projectManager by overwriting the previous
     storeProjectManager(projectManager);
@@ -68,8 +68,24 @@ project_form.addEventListener('submit', (event) => {
 })
 
 // handle deleting a todo item
+function deleteTodoHandler(event) {
+    projectManager.RemoveTodo(event.target.getAttribute('data-id'));
+
+    container.innerHTML = '';
+    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, projectManager));
+
+    storeProjectManager(projectManager);
+}
 
 // handle deleting a project
+function deleteProjectHandler(event) {
+    projectManager.RemoveProject(event.target.getAttribute('data-project_name'));
+
+    container.innerHTML = '';
+    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, projectManager));
+
+    storeProjectManager(projectManager);
+}
 
 function storeProjectManager(projectManager)
 {
