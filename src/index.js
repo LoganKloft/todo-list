@@ -77,6 +77,11 @@ function deleteTodoHandler(event) {
     storeProjectManager(projectManager);
 }
 
+// close edit-todo-dialog
+const closeTodoDialogBtn = document.getElementById('close-todo-dialog-btn');
+closeTodoDialogBtn.addEventListener('click', () => {
+    editTodoDialog.close();
+});
 // handle editing a todo item
 const editTodoDialog = document.getElementById('edit-todo-dialog');
 function editTodoHandler(event) {

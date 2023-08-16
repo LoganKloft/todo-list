@@ -20,6 +20,7 @@ export default (deleteProjectHandler, deleteTodoHandler, editTodoHandler, projec
     container.appendChild(container_break);
 
     const container_body = document.createElement('div');
+    container_body.classList.add('todos-container')
     for (let todo of project.todos)
     {
         container_body.appendChild(todoDOM(deleteTodoHandler, editTodoHandler, todo));

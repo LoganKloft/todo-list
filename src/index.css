@@ -1,28 +1,76 @@
 html,
 body,
-h3, h4, p {
+h2, h3, h4, p {
     margin: 0;
     padding: 0;
 }
 
-.card {
-    border: 5px solid lightblue;
+img {
+    width: 24px;
+    height: auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+}
+
+form > div {
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.create-todo-container {
+    justify-self: center;
+    padding: 50px 0;
+}
+
+.create-project-container {
+    justify-self: center;
+    padding: 50px 0;
+}
+
+.projects-container {
+    grid-column: 1 / 3; 
+}
+
+#container {
+    margin-top: 20px;
+}
+
+.todos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 300px);
+    gap: 10px;
+    justify-content: center;
+}
+
+.todo-container {
+    width: 280px;
     border-radius: 10px;
-    width: 300px;
+    padding: 10px;
 }
 
-.card .card-header {
-    background-color: lightblue;
+.todo-container[data-priority='low'] {
+    background-color: green;
 }
 
-.card .card-header h3 {
-    color: black;
+.todo-container[data-priority='medium'] {
+    background-color: orange;
 }
 
-.card .card-header h4 {
-    color: gray;
+.todo-container[data-priority='high'] {
+    background-color: red;
 }
 
-.card-body p {
-    color: gray;
+.todo-body {
+    background-color: white;
+    padding: 2px;
 }

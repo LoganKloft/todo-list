@@ -5,6 +5,7 @@ export default (deleteTodoHandler, editTodoHandler, todo) => {
     const container = document.createElement('div');
     container.setAttribute('data-priority', todo.priority);
     container.setAttribute('data-id', todo.id);
+    container.classList.add('todo-container');
 
     const container_header = document.createElement('div');
     const container_title = document.createElement('h3');
@@ -31,10 +32,11 @@ export default (deleteTodoHandler, editTodoHandler, todo) => {
     container.appendChild(container_header);
 
     const container_body = document.createElement('div');
+    container_body.classList.add('todo-body');
     const container_description = document.createElement('p');
     container_description.innerText = todo.description;
     container_body.appendChild(container_description);
-    container.appendChild(container_description);
+    container.appendChild(container_body);
 
     return container; 
 }
