@@ -22,7 +22,7 @@ if (projectManagerData !== null)
         }
     }
     container.innerHTML = '';
-    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, projectManager));
+    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, editTodoHandler, projectManager));
 }
 
 // handle new todo form
@@ -34,7 +34,7 @@ todo_form.addEventListener('submit', (event) => {
 
     // update display
     container.innerHTML = '';
-    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, projectManager));        
+    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, editTodoHandler, projectManager));        
 
     // save new projectManager by overwriting the previous
     storeProjectManager(projectManager);
@@ -55,7 +55,7 @@ project_form.addEventListener('submit', (event) => {
 
     // update display
     container.innerHTML = '';
-    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, projectManager));        
+    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, editTodoHandler, projectManager));        
 
     // save new projectManager by overwriting the previous
     storeProjectManager(projectManager);
@@ -72,9 +72,24 @@ function deleteTodoHandler(event) {
     projectManager.RemoveTodo(event.target.getAttribute('data-id'));
 
     container.innerHTML = '';
-    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, projectManager));
+    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, editTodoHandler, projectManager));
 
     storeProjectManager(projectManager);
+}
+
+// handle editing a todo item
+const editTodoDialog = document.getElementById('edit-todo-dialog');
+function editTodoHandler(event) {
+    // prepopulate dialog
+    editTodoForm.elements['title'].value = event.target.getAttribute('data-title');
+    editTodoForm.elements['date'].value = event.target.getAttribute('data-date');
+    editTodoForm.elements['description'].value = event.target.getAttribute('data-description');
+    editTodoForm.elements['priority'].value = event.target.getAttribute('data-priority');
+    editTodoForm.elements['project_name'].value = event.target.getAttribute('data-project_name');
+    editTodoForm.elements['id'].value = event.target.getAttribute('data-id');
+
+    // show
+    editTodoDialog.showModal();
 }
 
 // handle deleting a project
@@ -82,11 +97,13 @@ function deleteProjectHandler(event) {
     projectManager.RemoveProject(event.target.getAttribute('data-project_name'));
 
     container.innerHTML = '';
-    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, projectManager));
+    container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, editTodoHandler,projectManager));
 
     storeProjectManager(projectManager);
 }
 
+// stores projectManager data (attributes that aren't functions)
+// in localStorage
 function storeProjectManager(projectManager)
 {
     try { 
@@ -104,3 +121,43 @@ document.getElementById('clear-storage-button').addEventListener('click', () => 
     // refresh page
     location.reload();
 });
+
+// handle submitting form in edit-todo-dialog
+const editTodoForm = document.getElementById('edit-todo-form');
+editTodoForm.addEventListener('submit', (event) => {
+    // retrieve the form data
+    const formData =  new FormData(editTodoForm);
+    const title = formData.get('title');
+    const description = formData.get('description');
+    const date = formData.get('date');
+    const priority = formData.get('priority');
+    const project_name = formData.get('project_name');
+    const id = formData.get('id');
+
+    // get the todo and update its values
+    const todo = projectManager.GetTodo(id);
+    if (todo !== null)
+    {
+        todo.title = title;
+        todo.description = description;
+        todo.date = date;
+        todo.priority = priority;
+
+        // if we changed the project_name,
+        // we'll need to remove the todo from that project
+        // and then add it to the correct project
+        if (todo.project_name !== project_name)
+        {
+            projectManager.RemoveTodo(id);
+            todo.project_name = project_name;
+            projectManager.AddTodo(todo);
+        }
+
+        // update display
+        container.innerHTML = '';
+        container.appendChild(projectManagerDOM(deleteProjectHandler, deleteTodoHandler, editTodoHandler, projectManager));        
+
+        // save projectManager by overwriting the previous
+        storeProjectManager(projectManager);
+    }
+})

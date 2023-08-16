@@ -26,6 +26,19 @@ export class ProjectManager {
         }
     }
 
+    GetTodo(id)
+    {
+        for (let project of this.projects)
+        {
+            if (project.has(id))
+            {
+                return project.get(id);
+            }
+        }
+
+        return null;
+    }
+
     AddProject(project)
     {
         if (!this.#HasProject(project.name))

@@ -1,6 +1,7 @@
 import deleteIconURL from './delete.png';
+import editIconURL from  './edit.png';
 
-export default (deleteTodoHandler, todo) => {
+export default (deleteTodoHandler, editTodoHandler, todo) => {
     const container = document.createElement('div');
     container.setAttribute('data-priority', todo.priority);
     container.setAttribute('data-id', todo.id);
@@ -17,6 +18,16 @@ export default (deleteTodoHandler, todo) => {
     delete_img.setAttribute('data-id', todo.id);
     delete_img.addEventListener('click', deleteTodoHandler);
     container_header.appendChild(delete_img);
+    const editImg = document.createElement('img');
+    editImg.src = editIconURL;
+    editImg.setAttribute('data-title', todo.title);
+    editImg.setAttribute('data-description', todo.description);
+    editImg.setAttribute('data-date', todo.date);
+    editImg.setAttribute('data-priority', todo.priority);
+    editImg.setAttribute('data-project_name', todo.project_name);
+    editImg.setAttribute('data-id', todo.id);
+    editImg.addEventListener('click', editTodoHandler);
+    container_header.appendChild(editImg);
     container.appendChild(container_header);
 
     const container_body = document.createElement('div');

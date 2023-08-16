@@ -1,7 +1,7 @@
 import todoDOM from './todoDOM';
 import deleteIconURL from './delete.png';
 
-export default (deleteProjectHandler, deleteTodoHandler, project) => {
+export default (deleteProjectHandler, deleteTodoHandler, editTodoHandler, project) => {
     const container = document.createElement('div');
 
     const div = document.createElement('div');
@@ -22,7 +22,7 @@ export default (deleteProjectHandler, deleteTodoHandler, project) => {
     const container_body = document.createElement('div');
     for (let todo of project.todos)
     {
-        container_body.appendChild(todoDOM(deleteTodoHandler, todo));
+        container_body.appendChild(todoDOM(deleteTodoHandler, editTodoHandler, todo));
     }
     container.appendChild(container_body);
     
